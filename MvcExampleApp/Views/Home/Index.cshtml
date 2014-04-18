@@ -26,4 +26,52 @@
 
 <hr />
 
-<h2>Person List</h2>
+<!-- This is the start of the people list component, knockout looks for -->
+<div id="peopleList">
+
+  <h2>Person List &nbsp;&nbsp;&nbsp;&nbsp;<small data-bind="visible: showTable"><a href="#" role="button" class="text-success"><span class="glyphicon glyphicon-plus-sign"></span> Add New Person</a></small></h2>
+
+  <div class="alert alert-danger">
+    <p>There are no people in the list please &nbsp;&nbsp;&nbsp;&nbsp;<button role="button" class="text-success"><span class="glyphicon glyphicon-plus-sign"></span> Add A New Person</button></p>
+  </div>
+
+  <table class="table table-bordered table-condensed" data-bind="visible: showTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>First Name</th>
+        <th>Second Name</th>
+        <th>Email</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+</div>
+<!-- This is the end of the people list component, knockout looks for -->
+
+@section UserScripts
+{
+  <script type="text/javascript" src="scripts/personTable.js"></script>
+}
+
+@section UserDialogs
+{
+
+}
+
+@section UserTemplates
+{
+  <script type="text/template" id="personTableRow">
+
+    <tr>
+      <td>0</td>
+      <td>xx</td>
+      <td>xx</td>
+      <td>xx</td>
+      <td>xx</td>
+    </tr>
+
+  </script>
+}

@@ -31,8 +31,12 @@
 
     <script src="@Url.Content("~/scripts/jquery-2.1.0.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/scripts/bootstrap.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/scripts/knockout-2.3.0.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/scripts/knockout-3.1.0.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/scripts/knockout.mapping-latest.js")" type="text/javascript"></script>
+
     @RenderSection("UserScripts", false)
+    @RenderSection("UserDialogs", false)
+    @RenderSection("UserTemplates", false)
+
   </body>
 </html>
