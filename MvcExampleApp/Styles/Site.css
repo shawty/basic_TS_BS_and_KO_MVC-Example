@@ -1,0 +1,18 @@
+﻿body
+{
+  padding: 10px;
+}
+
+.top-spacing
+{
+  margin-top: 40px;
+}
+
+.footerText
+{
+  font-size: 0.8em;
+  color: silver;
+  border-top: 1px solid lightgrey;
+  padding-top: 10px;
+  margin-top: 30px;
+}
