@@ -1,4 +1,16 @@
-basic_TS_BS_and_KO_MVC-Example
-==============================
+Basic ASP.NET MVC Sample (Using Bootstrap, KnockoutJS and Typescript)
+=====================================================================
 
-A basic example of using typescript with bootstrap and knockout JS in an ASP.NET MVC Application
+A very basic ASP.NET sample application to accompny my blog post on the subject at http://bloglinkhere
+
+Demonstrates the quickest path to using the following:
+
+*Bootstrap 3 for UI layout 
+*Knockout JS for MVVM and Databinding
+*Typescript for easy maintainability of JS resources
+
+Also uses definition files from the 'Definately Typed" repository right here on git hub at:
+
+https://github.com/borisyankov/DefinitelyTyped
+
+
