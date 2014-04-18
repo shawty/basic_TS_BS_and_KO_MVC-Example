@@ -39,7 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LinkSource.cs" />
     <Compile Include="DataSource.cs" />
+    <Compile Include="Entities\LinkObject.cs" />
     <Compile Include="Entities\PersonObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
