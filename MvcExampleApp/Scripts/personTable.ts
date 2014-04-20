@@ -12,11 +12,11 @@ class ViewModel {
   public peopleData: any = ko.observableArray([]);
 
   public Load(): void {
-    $.getJSON("spanked",
+    $.getJSON("ajax/getallpeople",
       (data) => {
         alert(data);
       }
-      );
+    );
   }
 
 }
@@ -24,5 +24,5 @@ class ViewModel {
 window.onload = () => {
   var pageView = document.getElementById('peopleList');
   var myViewModel = new ViewModel(pageView);
-  //myViewModel.Load();
+  myViewModel.Load();
 };
