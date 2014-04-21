@@ -5,3 +5,45 @@
 <div class="page-header">
   <h1>ASP.NET MVC Demo site <small>links to technologies used in this demo</small></h1>
 </div>
+
+<p class="lead">
+  The list below gives a list of links to the technologies and resources mentioned and/or used int is demo
+</p>
+
+<p>
+  Clicking on the button marked 'Visit this site' open the associated page in a new window/tab depending on your browser configuration.
+</p>
+
+<hr />
+
+<!-- This is the start of the link list component, knockout looks for -->
+<div id="linksList" class="col-sm-8">
+
+  <ul class="media-list" data-bind="template: {name: 'linkListRow', foreach: linksData}"></ul>
+
+</div>
+<!-- This is the end of the people list component, knockout looks for -->
+@section UserScripts
+{
+  <script type="text/javascript">
+    var baseUrl = "@Url.Content("~/")";
+  </script>
+  <script type="text/javascript" src="@Url.Content("~/scripts/linksList.js")"></script>
+}
+
+@section UserTemplates
+{
+  <script type="text/template" id="linkListRow">
+
+    <li class="media">
+      <a class="pull-left" href="#" data-bind="attr: { href: LinkDestination}" target="_blank">
+        <img class="media-object" src="#" data-bind="attr: { src: getImagePath }">
+      </a>
+      <div class="media-body">
+        <h4 class="media-heading"><a href="#" data-bind="text: LinkText, attr: { href: LinkDestination}" target="_blank">xx</a></h4>
+        <p data-bind="text: Description">Media description</p>
+      </div>
+    </li>
+
+  </script>
+}
