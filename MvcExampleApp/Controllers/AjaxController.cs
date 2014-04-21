@@ -42,11 +42,19 @@ namespace MvcExampleApp.Controllers
     {
       // For the purposes of this example where just assuming everything works all of the time.
       // Ideally though, you'd want to return some kind of status from your data tier here
-      PretendData.DataSource.Update(personToUpdate);
+      var updatedPerson = PretendData.DataSource.Update(personToUpdate);
 
-      var response = new UpdateResponse { Status = "OK", Message = "" };
-      //var response = new UpdateResponse { Status = "ERROR", Message = "Record failed to update beacuse it's broken." };
+      UpdateResponse response;
 
+      if(null != updatedPerson)
+      {
+        response = new UpdateResponse { Error = false, Message = "", attachedObject = updatedPerson };
+      }
+      else
+      {
+        response = new UpdateResponse { Error = true, Message = "Record failed to update beacuse it's broken.", attachedObject = null };
+      }
+      
       return Json(response);
     }
 
@@ -57,7 +65,7 @@ namespace MvcExampleApp.Controllers
       // Ideally though, you'd want to return some kind of status from your data tier here
       PretendData.DataSource.DeleteById(id);
 
-      var response = new UpdateResponse { Status = "OK", Message = "" };
+      var response = new UpdateResponse { Error = false, Message = "" };
       //var response = new UpdateResponse { Status = "ERROR", Message = "Record failed to update beacuse it's broken." };
 
       return Json(response);
@@ -68,10 +76,10 @@ namespace MvcExampleApp.Controllers
     {
       // For the purposes of this example where just assuming everything works all of the time.
       // Ideally though, you'd want to return some kind of status from your data tier here
-      PretendData.DataSource.AddNew(personToAdd);
+      var addedRecord = PretendData.DataSource.AddNew(personToAdd);
 
-      var response = new UpdateResponse { Status = "OK", Message = "" };
-      //var response = new UpdateResponse { Status = "ERROR", Message = "Record failed to update beacuse it's broken." };
+      var response = new UpdateResponse { Error = false, Message = "", attachedObject = addedRecord };
+      //var response = new UpdateResponse { Error = true, Message = "Record failed to update beacuse it's broken.", attachedObject = null };
 
       return Json(response);
     }

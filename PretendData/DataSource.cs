@@ -32,7 +32,7 @@ namespace PretendData
 
     }
 
-    public static void Update(PersonObject personDetails)
+    public static PersonObject Update(PersonObject personDetails)
     {
       var thePerson = _theData.SingleOrDefault(x => x.RecordId == personDetails.RecordId);
       if(null != thePerson)
@@ -40,16 +40,21 @@ namespace PretendData
         thePerson.FirstName = personDetails.FirstName;
         thePerson.SecondName = personDetails.SecondName;
         thePerson.EmailAddress = personDetails.EmailAddress;
+
+        return thePerson;
       }
 
+      return null;
     }
 
-    public static void AddNew(PersonObject personDetails)
+    public static PersonObject AddNew(PersonObject personDetails)
     {
       int newId = _theData.Max(x => x.RecordId) + 1;
       personDetails.RecordId = newId;
       _theData.Add(personDetails);
 
+      // return the record with the RecordId modified as required
+      return personDetails;
     }
 
   }

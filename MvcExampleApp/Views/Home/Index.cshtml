@@ -45,13 +45,11 @@
         <th>&nbsp;</th>
       </tr>
     </thead>
-    <tbody data-bind="template: {name: 'personTableRow', foreach: peopleData}">
-    </tbody>
+    <tbody data-bind="template: {name: 'personTableRow', foreach: peopleData}"></tbody>
   </table>
 
 </div>
 <!-- This is the end of the people list component, knockout looks for -->
-
 @section UserScripts
 {
   <script type="text/javascript">
@@ -62,7 +60,42 @@
 
 @section UserDialogs
 {
+  <!-- Add new record modal dialog -->
+  <div class="modal fade" id="dlgEditRecord">
+    <div class="modal-dialog">
+      <div class="modal-content">
 
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" data-bind="text: DialogTitleText">xx</h4>
+        </div>
+
+        <div class="modal-body">
+          <form role="form">
+            <div class="form-group">
+              <label for="txtFirstName">First Name</label>
+              <input type="text" class="form-control" id="txtFirstName" placeholder="Enter first name" data-bind="value: FirstName">
+            </div>
+            <div class="form-group">
+              <label for="txtSecondName">Second Name</label>
+              <input type="text" class="form-control" id="txtSecondName" placeholder="Enter second name/surname" data-bind="value: SecondName">
+            </div>
+            <div class="form-group">
+              <label for="txtEmailAddress">Email Address</label>
+              <input type="email" class="form-control" id="txtEmailAddress" placeholder="Enter email address" data-bind="value: EmailAddress">
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" data-bind="click: primaryButtonClick, text: PrimaryButtonText">xx</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- End add new record modal -->
 }
 
 @section UserTemplates
@@ -74,7 +107,10 @@
       <td data-bind="text: FirstName">xx</td>
       <td data-bind="text: SecondName">xx</td>
       <td data-bind="text: EmailAddress">xx</td>
-      <td><button class="btn btn-primary btn-sm" data-bind="click: actionClick">Action Button</button></td>
+      <td>
+        <button class="btn btn-danger btn-sm" data-bind="click: function() { deleteRecord($parent); }">Delete</button>
+        <button class="btn btn-primary btn-sm" data-bind="click: function() { editRecord($parent); }">Edit</button>
+      </td>
     </tr>
 
   </script>

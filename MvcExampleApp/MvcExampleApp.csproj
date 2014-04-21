@@ -149,6 +149,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\linksList.ts" />
     <TypeScriptCompile Include="Scripts\personTable.ts" />
+    <TypeScriptCompile Include="Scripts\typings\bootstrap.paginator\bootstrap.paginator.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\bootstrap\bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout.es5\knockout.es5.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout.mapping\knockout.mapping.d.ts" />
