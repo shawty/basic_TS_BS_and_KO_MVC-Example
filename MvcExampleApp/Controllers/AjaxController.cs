@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using MvcExampleApp.Models;
@@ -15,12 +16,25 @@ namespace MvcExampleApp.Controllers
 
     public ActionResult GetAllPeople()
     {
-      return Json(PretendData.DataSource.GetAll(), JsonRequestBehavior.AllowGet);
+      var data = PretendData.DataSource.GetAll();
+      //var data = new List<PersonObject>();
+      if(null == data)
+      {
+        data = new List<PersonObject>();
+      }
+
+      return Json(data, JsonRequestBehavior.AllowGet);
     }
 
     public ActionResult GetOnePerson(int id)
     {
-      return Json(PretendData.DataSource.GetById(id), JsonRequestBehavior.AllowGet);
+      var data = PretendData.DataSource.GetById(id);
+      if(null == data)
+      {
+        return new HttpNotFoundResult();
+      }
+
+      return Json(data, JsonRequestBehavior.AllowGet);
     }
 
     [HttpPost]

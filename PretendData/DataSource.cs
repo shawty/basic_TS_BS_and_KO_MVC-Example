@@ -18,7 +18,6 @@ namespace PretendData
     public static List<PersonObject> GetAll()
     {
       return _theData.OrderBy(x => x.RecordId).ToList();
-
     }
 
     public static PersonObject GetById(int id)

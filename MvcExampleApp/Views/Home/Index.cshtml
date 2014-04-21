@@ -11,7 +11,7 @@
 </p>
 
 <p>
-  This example uses Twitter Bootstrap for the UI layout, Knockout.JS for the Viewmodel handling and Microsoft's new Typescript engine to allow easy javascrip development.
+  This example uses Twitter Bootstrap for the UI layout, Knockout.JS for the Viewmodel handling and Microsoft's new Typescript engine to allow easy javascript development.
 </p>
 
 <p>
@@ -29,23 +29,24 @@
 <!-- This is the start of the people list component, knockout looks for -->
 <div id="peopleList">
 
-  <h2>Person List &nbsp;&nbsp;&nbsp;&nbsp;<small data-bind="visible: showTable"><a href="#" role="button" class="text-success"><span class="glyphicon glyphicon-plus-sign"></span> Add New Person</a></small></h2>
+  <h2>Person List &nbsp;&nbsp;&nbsp;&nbsp;<small data-bind="visible: showTable, click: addNewClick" style="display: none;"><a href="#" role="button" class="text-success"><span class="glyphicon glyphicon-plus-sign"></span> Add New Person</a></small></h2>
 
-  <div class="alert alert-danger">
-    <p>There are no people in the list please &nbsp;&nbsp;&nbsp;&nbsp;<button role="button" class="text-success"><span class="glyphicon glyphicon-plus-sign"></span> Add A New Person</button></p>
+  <div class="alert alert-danger" data-bind="visible: showAlert" style="display:none;">
+    <p>There are no people in the list please &nbsp;&nbsp;&nbsp;&nbsp;<button role="button" class="text-success" data-bind="click: addNewClick"><span class="glyphicon glyphicon-plus-sign"></span> Add A New Person</button></p>
   </div>
 
-  <table class="table table-bordered table-condensed" data-bind="visible: showTable">
+  <table class="table table-bordered table-condensed" data-bind="visible: showTable" style="display:none;">
     <thead>
       <tr>
         <th>#</th>
         <th>First Name</th>
         <th>Second Name</th>
-        <th>Email</th>
+        <th>Email Address</th>
         <th>&nbsp;</th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody data-bind="template: {name: 'personTableRow', foreach: peopleData}">
+    </tbody>
   </table>
 
 </div>
@@ -53,7 +54,10 @@
 
 @section UserScripts
 {
-  <script type="text/javascript" src="scripts/personTable.js"></script>
+  <script type="text/javascript">
+    var baseUrl = "@Url.Content("~/")";
+  </script>
+  <script type="text/javascript" src="@Url.Content("~/scripts/personTable.js")"></script>
 }
 
 @section UserDialogs
@@ -66,11 +70,11 @@
   <script type="text/template" id="personTableRow">
 
     <tr>
-      <td>0</td>
-      <td>xx</td>
-      <td>xx</td>
-      <td>xx</td>
-      <td>xx</td>
+      <td data-bind="text: RecordId">#</td>
+      <td data-bind="text: FirstName">xx</td>
+      <td data-bind="text: SecondName">xx</td>
+      <td data-bind="text: EmailAddress">xx</td>
+      <td><button class="btn btn-primary btn-sm" data-bind="click: actionClick">Action Button</button></td>
     </tr>
 
   </script>
