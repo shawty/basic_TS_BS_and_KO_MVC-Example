@@ -8,7 +8,7 @@ var PersonTableRowViewModel = (function () {
         ko.mapping.fromJS(inputRecord, {}, this);
     }
     PersonTableRowViewModel.prototype.deleteRecord = function (myParent) {
-        myParent.deleteRecord(this);
+        myParent.deleteRecordClick(this);
     };
 
     PersonTableRowViewModel.prototype.editRecord = function (myParent) {
@@ -19,7 +19,7 @@ var PersonTableRowViewModel = (function () {
 
 // Full table view model
 var PersonTableViewModel = (function () {
-    function PersonTableViewModel(targetElement, addNewDialogVM) {
+    function PersonTableViewModel(targetElement, addNewDialogVM, yesnoDialogVM) {
         this.loadComplete = ko.observable(false);
         this.peopleData = ko.observableArray([]);
         this.showAlert = ko.computed(function () {
@@ -42,6 +42,7 @@ var PersonTableViewModel = (function () {
         }, this);
         ko.applyBindings(this, targetElement);
         this.recordDialog = addNewDialogVM;
+        this.yesnoDialog = yesnoDialogVM;
         $.support.cors = true;
     }
     PersonTableViewModel.prototype.Load = function () {
@@ -67,12 +68,15 @@ var PersonTableViewModel = (function () {
         this.recordDialog.show(this, false, theRecord);
     };
 
+    PersonTableViewModel.prototype.deleteRecordClick = function (theRecord) {
+        this.yesnoDialog.show(this, theRecord);
+    };
+
     PersonTableViewModel.prototype.deleteRecord = function (theRecord) {
-        if (confirm("Really delete this record?")) {
-            this.peopleData.remove(theRecord);
-            $.post(baseUrl + "ajax/deleteoneperson/" + theRecord.RecordId(), function (data) {
-            });
-        }
+        console.log(this);
+        this.peopleData.remove(theRecord);
+        $.post(baseUrl + "ajax/deleteoneperson/" + theRecord.RecordId(), function (data) {
+        });
     };
 
     PersonTableViewModel.prototype.addRecord = function (theRecord) {
@@ -151,14 +155,37 @@ var RecordDialogViewModel = (function () {
     return RecordDialogViewModel;
 })();
 
+var YesNoDialogViewModel = (function () {
+    function YesNoDialogViewModel(targetElement) {
+        ko.applyBindings(this, targetElement);
+        $.support.cors = true;
+        this.DialogDefinition = targetElement;
+    }
+    YesNoDialogViewModel.prototype.show = function (tableViewModel, recordToDelete) {
+        this.TableViewModel = tableViewModel;
+        this.recordToDelete = recordToDelete;
+        $(this.DialogDefinition).modal('show');
+    };
+
+    YesNoDialogViewModel.prototype.primaryButtonClick = function () {
+        this.TableViewModel.deleteRecord(this.recordToDelete);
+        $(this.DialogDefinition).modal('hide');
+    };
+    return YesNoDialogViewModel;
+})();
+
 window.onload = function () {
+    // Define VM for the yes/no dialog
+    var yesnoDialog = document.getElementById('dlgYesNo');
+    var yesnoDialogVM = new YesNoDialogViewModel(yesnoDialog);
+
     // Define VM for the new/edit record dialog
     var recordDialog = document.getElementById('dlgEditRecord');
     var recordDialogVM = new RecordDialogViewModel(recordDialog);
 
     // Define VM for main table
     var peopleList = document.getElementById('peopleList');
-    var peopleListVM = new PersonTableViewModel(peopleList, recordDialogVM);
+    var peopleListVM = new PersonTableViewModel(peopleList, recordDialogVM, yesnoDialogVM);
     peopleListVM.Load();
 };
 //# sourceMappingURL=personTable.js.map

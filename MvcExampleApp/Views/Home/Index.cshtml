@@ -96,6 +96,31 @@
     </div>
   </div>
   <!-- End add new record modal -->
+
+  <!-- yes/no modal dialog -->
+<div class="modal fade" id="dlgYesNo">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Delete Confirmation</h4>
+      </div>
+
+      <div class="modal-body">
+        <p>Are you sure you wish to delete the specified record?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+        <button type="button" class="btn btn-success" data-bind="click: primaryButtonClick"><span class="glyphicon glyphicon-ok"></span> Yes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- End add new record modal -->
+
 }
 
 @section UserTemplates
@@ -108,8 +133,8 @@
       <td data-bind="text: SecondName">xx</td>
       <td data-bind="text: EmailAddress">xx</td>
       <td>
-        <button class="btn btn-danger btn-sm" data-bind="click: function() { deleteRecord($parent); }">Delete</button>
-        <button class="btn btn-primary btn-sm" data-bind="click: function() { editRecord($parent); }">Edit</button>
+        <button class="btn btn-primary btn-sm" data-bind="click: function() { editRecord($parent); }"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
+        <button class="btn btn-danger btn-sm" data-bind="click: function() { deleteRecord($parent); }"><span class="glyphicon glyphicon-trash"></span> Delete</button>
       </td>
     </tr>
 

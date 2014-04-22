@@ -15,7 +15,7 @@ class PersonTableRowViewModel {
   public EmailAddress: any = ko.observable('');
 
   public deleteRecord(myParent: PersonTableViewModel): void {
-    myParent.deleteRecord(this);
+    myParent.deleteRecordClick(this);
   }
 
   public editRecord(myParent: PersonTableViewModel): void {
@@ -26,9 +26,11 @@ class PersonTableRowViewModel {
 
 // Full table view model
 class PersonTableViewModel {
-  constructor(targetElement: HTMLElement, addNewDialogVM: RecordDialogViewModel) {
+
+  constructor(targetElement: HTMLElement, addNewDialogVM: RecordDialogViewModel, yesnoDialogVM: YesNoDialogViewModel) {
     ko.applyBindings(this, targetElement);
     this.recordDialog = addNewDialogVM;
+    this.yesnoDialog = yesnoDialogVM;
     $.support.cors = true;
   }
 
@@ -36,6 +38,7 @@ class PersonTableViewModel {
   public peopleData: any = ko.observableArray([]);
 
   private recordDialog: RecordDialogViewModel;
+  private yesnoDialog: YesNoDialogViewModel;
 
   public showAlert: any = ko.computed(function () {
 
@@ -82,13 +85,16 @@ class PersonTableViewModel {
     this.recordDialog.show(this, false, theRecord);
   }
 
+  public deleteRecordClick(theRecord: PersonTableRowViewModel) {
+    this.yesnoDialog.show(this, theRecord);
+  }
+
   public deleteRecord(theRecord: any) {
-    if (confirm("Really delete this record?")) {
-      this.peopleData.remove(theRecord);
-      $.post(baseUrl + "ajax/deleteoneperson/" + theRecord.RecordId(),
-        (data) => { }
-      );
-    }
+    console.log(this);
+    this.peopleData.remove(theRecord);
+    $.post(baseUrl + "ajax/deleteoneperson/" + theRecord.RecordId(),
+      (data) => { }
+    );
   }
 
   public addRecord(theRecord: any): void {
@@ -178,8 +184,35 @@ class RecordDialogViewModel {
   }
 }
 
+class YesNoDialogViewModel {
+
+  constructor(targetElement: HTMLElement) {
+    ko.applyBindings(this, targetElement);
+    $.support.cors = true;
+    this.DialogDefinition = targetElement;
+  }
+
+  private DialogDefinition: HTMLElement;
+  private TableViewModel: PersonTableViewModel;
+  private recordToDelete: any;
+
+  public show(tableViewModel: any, recordToDelete: any): void {
+    this.TableViewModel = tableViewModel;
+    this.recordToDelete = recordToDelete;
+    $(this.DialogDefinition).modal('show');
+  }
+
+  public primaryButtonClick(): void {
+    this.TableViewModel.deleteRecord(this.recordToDelete);
+    $(this.DialogDefinition).modal('hide');
+  }
+}
 
 window.onload = () => {
+
+  // Define VM for the yes/no dialog
+  var yesnoDialog = document.getElementById('dlgYesNo');
+  var yesnoDialogVM = new YesNoDialogViewModel(yesnoDialog);
 
   // Define VM for the new/edit record dialog
   var recordDialog = document.getElementById('dlgEditRecord');
@@ -187,7 +220,7 @@ window.onload = () => {
 
   // Define VM for main table
   var peopleList = document.getElementById('peopleList');
-  var peopleListVM = new PersonTableViewModel(peopleList, recordDialogVM);
+  var peopleListVM = new PersonTableViewModel(peopleList, recordDialogVM, yesnoDialogVM);
   peopleListVM.Load();
 
 };
