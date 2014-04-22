@@ -49,7 +49,17 @@ namespace PretendData
 
     public static PersonObject AddNew(PersonObject personDetails)
     {
-      int newId = _theData.Max(x => x.RecordId) + 1;
+      int newId;
+
+      if(!_theData.Any())
+      {
+        newId = 1;
+      }
+      else
+      {
+         newId = _theData.Max(x => x.RecordId) + 1;
+      }
+
       personDetails.RecordId = newId;
       _theData.Add(personDetails);
 
