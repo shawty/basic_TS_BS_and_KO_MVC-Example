@@ -100,17 +100,17 @@ class PersonTableViewModel {
   }
 
   public updateRecord(theRecord: any): void {
-    //$.post(baseUrl + "ajax/UpdateOnePerson", theRecord,
-    //  (data) => {
+    $.post(baseUrl + "ajax/UpdateOnePerson", theRecord,
+      (data) => {
+        var oldPerson = ko.utils.arrayFirst(this.peopleData(), function (person: any) {
+          return person.RecordId() === theRecord.RecordId();
+        });
 
-        //this.peopleData.push(new PersonTableRowViewModel(data.attachedObject));
+        var newPerson = new PersonTableRowViewModel(data.attachedObject);
+        this.peopleData.replace(oldPerson, newPerson);
 
-    //    var oldPerson = ko.utils.arrayFirst(this.peopleData(), function (person) {
-    //      return person.RecordId() == theRecord.RecordId;
-    //    });
-
-    //  }
-    //);
+      }
+    );
   }
 }
 

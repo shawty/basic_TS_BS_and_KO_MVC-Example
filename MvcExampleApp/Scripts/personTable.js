@@ -83,7 +83,15 @@ var PersonTableViewModel = (function () {
     };
 
     PersonTableViewModel.prototype.updateRecord = function (theRecord) {
-        alert('Here we do the actual update');
+        var _this = this;
+        $.post(baseUrl + "ajax/UpdateOnePerson", theRecord, function (data) {
+            var oldPerson = ko.utils.arrayFirst(_this.peopleData(), function (person) {
+                return person.RecordId() === theRecord.RecordId();
+            });
+
+            var newPerson = new PersonTableRowViewModel(data.attachedObject);
+            _this.peopleData.replace(oldPerson, newPerson);
+        });
     };
     return PersonTableViewModel;
 })();
